@@ -1,5 +1,7 @@
 import './App.css';
-import { Calendar, dateFinsLoaclizer, dateFnsLocalizer } from "react-big-calendar";
+import Habit from './habit';
+import HabitForm from './habitform';
+import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 import format from "date-fns/format";
 import parse from "date-fns/parse";
 import startOfWeek from "date-fns/startOfWeek";
@@ -7,7 +9,6 @@ import getDay from "date-fns/getDay";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
-
 
 const LoginPage = ({ onLogin, onRegister }) => {
   const [username, setUsername] = useState('');
@@ -120,26 +121,78 @@ const localizer = dateFnsLocalizer({
 
 const events = [
   {
+      id: '1',
       title: "Habit 1",
       allDay: true,
       start: new Date(2023, 3, 0),
       end: new Date(2023, 3, 0),
   },
   {
+      id: '2',
       title: "Habit 2",
       start: new Date(2023, 3, 7),
       end: new Date(2023, 3, 10),
   },
   {
+      id: '3',
       title: "Habit 3",
       start: new Date(2023, 3, 20),
       end: new Date(2023, 3, 23),
   },
 ];
 
+
+const TaskPage = ({ onViewTasks }) => {
+  const [habits, setHabits] = useState([
+    {
+      id: 1,
+      text: "Habit 1",
+      startDate: "3-10-23",
+      endDate: "3-11-23"
+    },
+    {
+      id: 2,
+      text: "Habit 2",
+      startDate: "3-11-23",
+      endDate: "3-12-23"
+    }
+  ])
+
+  const handleAddHabit = (text, startDate, endDate) => {
+    const habit = {
+      id: habits.length + 1,
+      text,
+      startDate,
+      endDate,
+    }
+    setHabits([...habits, habit])
+  }
+
+  const handleDeleteHabit = (id) => {
+    setHabits(habits.filter(habit => habit.id !== id))
+    console.log("delete habit", id)
+  }
+
+  return (
+    <div className="Tasks">
+      <h1>Habit List</h1>
+      <h2>Add habit</h2>
+      <HabitForm onAddHabit={handleAddHabit}/>
+
+      {habits.map(habit => (
+        <Habit onDelete={handleDeleteHabit} id={habit.id} text={habit.text} startDate={habit.startDate} endDate={habit.endDate} />
+      ))}
+
+    </div>
+  )
+}
+
+
+
+
 const CalendarPage = ({ onViewCalendar}) => {
   const [newEvent, setNewEvent] = useState({ title: "", start: "", end: ""});
-  const [allEvents, setAllEvents] = useState(events)
+  const [allEvents, setAllEvents] = useState(events);
 
   function handleAddEvent() {
     for (let i = 0; i<allEvents.length; i++){
@@ -158,6 +211,16 @@ const CalendarPage = ({ onViewCalendar}) => {
     }
     setAllEvents([...allEvents, newEvent]);
   }
+/*
+  function buttonOnClick() {
+    addNotification({
+      title: 'Habit Time',
+      message: 'Time for habits',
+      theme: 'light',
+      native: true
+    })
+  };
+*/
 
   return (
     <div className="Calendar">
@@ -219,6 +282,9 @@ const App = () => {
       )}
       {view === 'calendar'&&(
         <CalendarPage/>
+      )}
+      {view === 'tasks'&&(
+        <TaskPage/>
       )}
     </div>
     

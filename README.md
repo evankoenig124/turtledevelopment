@@ -1,4 +1,4 @@
-TurtleTrack by Turtle Development
+# TurtleTrack by Turtle Development
 Evan Koenig, Hayden Desmond, Matt Keast, James Treadwell, Nick Tassinari
 
 
@@ -12,3 +12,8 @@ to develop new habits/get rid of bad habits. TurtleTrack will allow the user to 
 experience, from color scheme to gaining trophies for their good work. TurtleTrack works hard to
 help the user not grow uninterested in the habit tracker, weekly summaries of their habits and
 streaks of their habits will also become available to the user. 
+
+## Dependencies:
+React-big-calendar
+date-fns
+react-datepicker
