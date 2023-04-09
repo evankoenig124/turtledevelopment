@@ -11,3 +11,176 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+section{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  background-color: gray;
+  /*background: url('C:\Users\Hdesm\Desktop\Test for Node\turtle-tracker\public\assets\Images\background-1.jpg')no-repeat;*/ 
+  background-position: center;
+  background-size: cover;
+}
+.form-box{
+  position: relative;
+  width: 400px;
+  height: 450px;
+  background: transparent;
+  border: 2px solid rgba(255,255,255, 0.5);
+  border-radius: 20px;
+  backdrop-filter: blur(15px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+h1{
+  font-size: 2em;
+  color: #fff;
+  text-align: center;
+  padding: 0 0 30px 0;
+}
+
+h3{
+  font-size: 2em;
+  color: #030303;
+  text-align: center;
+  padding: 0 0 30px 0;
+}
+
+.inputbox{
+  position: relative;
+  margin: 30px 0;
+  width: 310px;
+  border-bottom: 2px solid #fff;
+}
+
+.inputbox label{
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+  color: #fff;
+  font-size: 1em;
+  pointer-events: none;
+  transition: .5s;
+}
+
+input:focus ~ label,
+input:valid ~ label{
+  top: -5px;
+}
+
+.inputbox input {
+  width: 100%;
+  height: 50px;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 1em;
+  padding: 0 35px 0 5px;
+  color: #fff;
+
+}
+
+button{
+  width: 100%;
+  height: 40px;
+  border-radius: 40px;
+  background: #fff;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: 600;
+}
+
+.register{
+  font-size: .9em;
+  color: #fff;
+  text-align: center;
+  margin: 25px 0 10px;
+}
+
+.register p a{
+  text-decoration: none;
+  color: #fff;
+  font-weight: 600;
+}
+
+.register p a:hover{
+  text-decoration: underline;
+}
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: transparent;
+  position: relative; /* add position relative */
+}
+
+.home-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 20px;
+  box-sizing: border-box;
+  background-color: transparent;
+  border-bottom: 1px solid transparent
+}
+
+.home-title {
+  margin: 0;
+  font-size: 24px;
+}
+
+.logout-button {
+  position: relative;
+/* This currently only displays for full browser size on pc*/
+  font-size: 18px;
+  padding: 10px 20px;
+  border: none;
+  background-color: #ddd;
+  cursor: pointer;
+  left: 260%;
+}
+
+.home-body {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: calc(100% - 70px);
+  /* This currently only displays for full browser size on pc*/
+  position: absolute; /* add position absolute */
+  top: 70px; /* add top: 70px */
+  bottom: 0; /* add bottom: 0 */
+  left: px; /* left has to say px or it resets position? */
+  right: 220%; /* add right: 750 */
+}
+
+.home-sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  border-right: 1px solid transparent;
+  justify-content: flex-start;
+}
+
+.sidebar-button {
+  font-size: 18px;
+  padding: 10px 20px;
+  border: none;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.home-content {
+  flex: 1;
+  background-color: #fff;
+}
