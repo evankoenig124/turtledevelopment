@@ -98,11 +98,11 @@ const HomePage = ({ user, onLogout, onViewTasks, onViewCalendar, onViewAccount }
 
 function TasksPage(props) {
   return (
-    <div>
+<div>
       <h1>Tasks Page</h1>
       <p>Welcome to the Tasks page.</p>
       <button onClick={() => props.setPage("home")}>Home</button>
-    </div>
+</div>
   );
 }
 
@@ -117,54 +117,54 @@ const CalendarsPage = ({onViewCalendar}) =>{
 
   function AccountsPage(props) {
     return (
-      <div>
+  <div>
         <h1>Account Page</h1>
         <p>Welcome to the Tasks page.</p>
         <button onClick={() => props.setPage("home")}>Home</button>
-      </div>
+  </div>
     );
   }
 
-  const App = () => {
-    const [user, setUser] = useState(null);
-    const [view, setView] = useState('login');
-  
-    const handleLogin = (user) => {
-      setUser(user);
-      setView('home');
-    };
-  
-    const handleRegister = () => {
-      setView('register');
-    };
-  
-    const handleLogout = () => {
-      setUser(null);
-      setView('login');
-    };
+const App = () => {
+  const [user, setUser] = useState(null);
+  const [view, setView] = useState('login');
+
+  const handleLogin = (user) => {
+    setUser(user);
+    setView('home');
+  };
+
+  const handleRegister = () => {
+    setView('register');
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+    setView('login');
+  };
   
     const handleTasks = () => {
-      setView('tasks');
+    setView('tasks');
     };
   
     const handleCalendar = () => {
-      setView('calendar');
+    setView('calendar');
     };
   
     const handleAccount = () => {
-      setView('account');
+    setView('account');
     };
-  
-    return (
-      <section>
-        <div>
-          {view === 'login' && (
-            <LoginPage onLogin={handleLogin} onRegister={handleRegister} />
-          )}
-          {view === 'register' && (
-            <RegisterPage onRegister={() => setView('login')} />
-          )}
-          {view === 'home' && (
+
+  return (
+    <section>
+    <div>
+      {view === 'login' && (
+        <LoginPage onLogin={handleLogin} onRegister={handleRegister} />
+      )}
+      {view === 'register' && (
+        <RegisterPage onRegister={() => setView('login')} />
+      )}
+      {view === 'home' && (
             <HomePage
               user={user}
               onLogout={handleLogout}
@@ -172,13 +172,13 @@ const CalendarsPage = ({onViewCalendar}) =>{
               onViewCalendar={handleCalendar}
               onViewAccount={handleAccount}
             />
-          )}
+      )}
           {view === 'tasks' && <TaskPage onViewTasks={handleTasks} />}
           {view === 'calendar' && <CalendarsPage onViewCalendar={handleCalendar} />}
           {view === 'account' && <AccountPage onViewAccount={handleAccount} />}
-        </div>
-      </section>
-    );
-  };
+    </div>
+    </section>
+  );
+};
 
 export default App;
