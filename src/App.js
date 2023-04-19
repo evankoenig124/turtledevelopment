@@ -50,7 +50,7 @@ const LoginPage = ({ onLogin, onRegister }) => {
 };
 
 
-const RegisterPage = ({ onRegister }) => {
+const RegisterPage = ({ onRegister, onViewLogin }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -75,6 +75,7 @@ const RegisterPage = ({ onRegister }) => {
       <input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
       </div>
       <button onClick={handleRegister}>Register</button>
+      <button class = "spacedText" onClick={onViewLogin}>Back</button>
     </div>
     </div>
     </section>
@@ -82,29 +83,58 @@ const RegisterPage = ({ onRegister }) => {
 };
 
 
-const HomePage = ({ user, onLogout,onViewTasks, onViewCalendar, onViewAccount }) => {
+const HomePage = ({ user, onLogout, onViewTasks, onViewCalendar, onViewAccount }) => {
   return (
-    <div>
-    <div className="home-container">
-      <div className="home-header">
-        <h3 className="home-title">Welcome, {user.username}!</h3>
-        <button className="logout-button" onClick={onLogout}>Logout</button>
-      </div>
-      <div className="home-body">
-        <div className="home-sidebar">
-          <button className="sidebar-button" onClick={() => onViewTasks()}>Tasks</button>
+      <div className="home-container">
+        <div className="sidebar">
+          <button className="sidebar-button-current">Home</button>
+          <button className="sidebar-button" onClick={onViewTasks}>Tasks</button>
           <button className="sidebar-button" onClick={onViewCalendar}>Calendar</button>
           <button className="sidebar-button" onClick={onViewAccount}>Account</button>
-          </div>
+          <button className="logout-button" onClick={onLogout}>Logout</button>
         </div>
+
+        <div className="home-header">
+          <h1 className="home-title">Welcome, {user.username}!</h1>
+        </div>
+
+        <div className="home-body"></div>
         <div className="home-content"></div>
       </div>
-    </div>
   );
 };
 
+const TasksPage = ({onViewAccount, onViewHome, onViewCalendar, onLogout}) => {
+  return (
+    <div className="tasks-container">
+      <div className="sidebar">
+        <button className="sidebar-button" onClick={onViewHome}>Home</button>
+        <button className="sidebar-button-current" >Tasks</button>
+        <button className="sidebar-button" onClick={onViewCalendar}>Calendar</button>
+        <button className="sidebar-button" onClick={onViewAccount}>Account</button>
+        <button className="logout-button" onClick={onLogout}>Logout</button>
+      </div>
+      <h1>Tasks</h1>
+      <h2>Add New Habit</h2>
+    </div>
+  );
+}
 
-
+const AccountPage = ({onViewTasks, onViewHome, onViewCalendar, onLogout}) => {
+  return (
+    <div className="account-container">
+      <div className="sidebar">
+        <button className="sidebar-button" onClick={onViewHome}>Home</button>
+        <button className="sidebar-button" onClick={onViewTasks}>Tasks</button>
+        <button className="sidebar-button" onClick={onViewCalendar}>Calendar</button>
+        <button className="sidebar-button-current" >Account</button>
+        <button className="logout-button" onClick={onLogout}>Logout</button>
+      </div>
+      <h1>Account</h1>
+      <h2>About your profile</h2>
+    </div>
+  );
+}
 
 const locales = {
   "en-US": require("date-fns/locale/en-US"),
@@ -137,7 +167,7 @@ const events = [
   },
 ];
 
-const CalendarPage = ({ onViewCalendar}) => {
+const CalendarPage = ({onViewTasks, onViewAccount, onViewHome, onLogout}) => {
   const [newEvent, setNewEvent] = useState({ title: "", start: "", end: ""});
   const [allEvents, setAllEvents] = useState(events)
 
@@ -160,7 +190,14 @@ const CalendarPage = ({ onViewCalendar}) => {
   }
 
   return (
-    <div className="Calendar">
+    <div className="calendar-container">
+      <div className="sidebar">
+        <button className="sidebar-button" onClick={onViewHome}>Home</button>
+        <button className="sidebar-button" onClick={onViewTasks}>Tasks</button>
+        <button className="sidebar-button-current" >Calendar</button>
+        <button className="sidebar-button" onClick={onViewAccount}>Account</button>
+        <button className="logout-button" onClick={onLogout}>Logout</button>
+      </div>
       <h1>Calendar</h1>
       <h2>Add New Habit</h2>
       <div>
@@ -194,6 +231,9 @@ const App = () => {
     setUser(null);
     setView('login');
   };
+  const handleHome = () =>{
+    setView('home');
+  }
   const handleTasks = () =>{
     setView('tasks');
   }
@@ -202,6 +242,9 @@ const App = () => {
   }
   const handleAccount = () =>{
     setView('account');
+  }
+  const handleViewLogin = () =>{
+    setView('login');
   }
 
   return (
@@ -212,13 +255,19 @@ const App = () => {
         <LoginPage onLogin={handleLogin} onRegister={handleRegister} />
       )}
       {view === 'register' && (
-        <RegisterPage onRegister={() => setView('login')} />
+        <RegisterPage onRegister={() => setView('login')} onViewLogin={handleViewLogin} />
       )}
       {view === 'home' && (
-        <HomePage user={user} onLogout={handleLogout} onViewTasks={handleTasks} onViewCalendar={handleCalendar} onViewAccount={handleAccount}/>
+        <HomePage user={user} onLogout={handleLogout} onViewTasks={handleTasks} onViewCalendar={handleCalendar} onViewAccount={handleAccount} />
       )}
       {view === 'calendar'&&(
-        <CalendarPage/>
+        <CalendarPage onViewTasks={handleTasks} onViewHome={handleHome} onViewAccount={handleAccount} onLogout={handleLogout} />
+      )}
+      {view === 'tasks' && (
+        <TasksPage onViewAccount={handleAccount} onViewHome={handleHome} onViewCalendar={handleCalendar} />
+      )}
+      {view === 'account' && (
+        <AccountPage onViewTasks={handleTasks} onViewHome={handleHome} onViewCalendar={handleCalendar} onLogout={handleLogout} />
       )}
     </div>
     

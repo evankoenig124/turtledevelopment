@@ -5,3 +5,27 @@
 .Calendar {
   text-align: center;
 }
+
+.sidebar {
+  position: fixed;
+  size: fixed;
+  width: 200px;
+  top: 0;
+  left: 0;
+}
+
+.sidebar-button-current{
+  color:white;
+  background-color: rgb(28, 72, 110);
+}
+
+.spacedText{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.logout-button{
+  margin-top: 40px;
+  background-color:rgb(161, 193, 224);
+  left: 0;
+}
