@@ -1,4 +1,6 @@
 import './App.css';
+import styles from "./homeworkTracker.module.css";
+
 import { Calendar, dateFinsLoaclizer, dateFnsLocalizer } from "react-big-calendar";
 import format from "date-fns/format";
 import parse from "date-fns/parse";
@@ -82,7 +84,7 @@ const RegisterPage = ({ onRegister }) => {
 };
 
 
-const HomePage = ({ user, onLogout,onViewTasks, onViewCalendar, onViewAccount }) => {
+const HomePage = ({ user, onLogout,onViewTasks, onViewCalendar, onViewAccount, onViewHomework }) => {
   return (
     <div>
     <div className="home-container">
@@ -95,6 +97,7 @@ const HomePage = ({ user, onLogout,onViewTasks, onViewCalendar, onViewAccount })
           <button className="sidebar-button" onClick={() => onViewTasks()}>Tasks</button>
           <button className="sidebar-button" onClick={onViewCalendar}>Calendar</button>
           <button className="sidebar-button" onClick={onViewAccount}>Account</button>
+          <button className="sidebar-button" onClick={onViewHomework}>Homework</button>
           </div>
         </div>
         <div className="home-content"></div>
@@ -177,6 +180,43 @@ const CalendarPage = ({ onViewCalendar}) => {
 }
 
 
+const HomeworkPage = ({onViewHomework }) => {
+  const [newEvent, setNewEvent] = useState({ title: "", start: "", end: ""});
+  const [allEvents, setAllEvents] = useState(events)
+  function handleAddEvent() {
+    for (let i = 0; i<allEvents.length; i++){
+      const d1 = new Date(allEvents[i].start);
+      const d2 = new Date(newEvent.start);
+      const d3 = new Date(allEvents[i].end);
+      const d4 = new Date(newEvent.end);
+
+      if (
+        ( (d1 <= d2) && (d2 <= d3) ) || ( (d1 <= d4) && (d4 <= d3))
+      )
+      {
+        alert("Clash");
+        break;
+      }
+    }
+    setAllEvents([...allEvents, newEvent]);
+  }
+
+  return (
+    <div className="homework">
+      <h1>Homework</h1>
+      <h2>Keep track of your homework assignments here!</h2>
+
+      <div>
+        <input type="text" placeholder="What class is this for?" style={{ width: "30%", marginRight: "10px" }} value={newEvent.title} onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })} />
+                <DatePicker placeholderText="When is it due?" selected={newEvent.end} onChange={(end) => setNewEvent({ ...newEvent, end })} />
+                <button stlye={{ marginTop: "10px" }} onClick={handleAddEvent}>
+                    Add Assignment
+                </button>
+      </div>
+    </div>
+  );
+};
+
 const App = () => {
   const [user, setUser] = useState(null);
   const [view, setView] = useState('login');
@@ -203,6 +243,9 @@ const App = () => {
   const handleAccount = () =>{
     setView('account');
   }
+  const handleHomework = () =>{
+    setView('homework');
+  }
 
   return (
     <section>
@@ -215,10 +258,14 @@ const App = () => {
         <RegisterPage onRegister={() => setView('login')} />
       )}
       {view === 'home' && (
-        <HomePage user={user} onLogout={handleLogout} onViewTasks={handleTasks} onViewCalendar={handleCalendar} onViewAccount={handleAccount}/>
+        <HomePage user={user} onLogout={handleLogout} onViewTasks={handleTasks} onViewCalendar={handleCalendar}
+         onViewAccount={handleAccount} onViewHomework={handleHomework}/>
       )}
       {view === 'calendar'&&(
         <CalendarPage/>
+      )}
+      {view === 'homework'&&(
+        <HomeworkPage/>
       )}
     </div>
     
